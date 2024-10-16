@@ -5,8 +5,8 @@ Purple monster server is a next generation headless property management system, 
 ### Features: 
 * Changes are permanently recorded. The structure of the database ensures that any changes made to anything are permanently visible to authorized users. In fact, these changes are our "source of truth"; the data model for your property is built at start up by processing all the changes to your property.
 * Groups are in. 
-** We prefer groups to rates. Our group focused approach to property management systems simplifies management of your property. Do you have a special rate for locals? Create a local group, then put that rate on your group. Now you know why a guest got the rate they did!
-** Set limited groups. Groups can be limited to certain date ranges. We also want to add an api to restrict groups by other qualifications using scripting. We just haven't yet. 
+    * We prefer groups to rates. Our group focused approach to property management systems simplifies management of your property. Do you have a special rate for locals? Create a local group, then put that rate on your group. Now you know why a guest got the rate they did!
+    * Set limited groups. Groups can be limited to certain date ranges. We also want to add an api to restrict groups by other qualifications using scripting. We just haven't yet. 
 * Apps out the wazoo!
     * The front desk app gives easy access to all the sorts of things a front desk agent needs at their fingertips.
     * The housekeeping app allows housekeepers to stay up to date on the status of room. Set zones! The housekeepers assigned to those zones will be notified when one of their rooms has a status update!
