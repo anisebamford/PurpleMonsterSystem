@@ -1,24 +1,27 @@
+using Newtonsoft.Json.Linq;
+
 namespace PurpleMonsterSystem {
-    class TestEvent : EventArgs {
-        public string Message = "";
+    public class TestEventBody
+    {
+        public required string Message { get; set; }
+
         public override string ToString()
         {
             return Message;
         }
     }
-
+        
     class TestEventPublisher {
-        public delegate void TestEventHandler(object source, TestEvent e);
+        public delegate void TestEventHandler(object source, JsonEvent<TestEventBody> e);
 
         public event TestEventHandler? Tested;
 
-        public void Test(string message) {
-            System.Console.WriteLine($"sending message {message}");
-            OnTest(message);
+        public void Test(string json) {
+            var evt = JsonEvent<TestEventBody>.FromJson(json);
+            OnTest(evt);
         }
 
-        protected virtual void OnTest(string message) {
-            TestEvent evt = new() {Message = message};
+        protected virtual void OnTest(JsonEvent<TestEventBody> evt) {
             Tested?.Invoke(this, evt);
         }
     }

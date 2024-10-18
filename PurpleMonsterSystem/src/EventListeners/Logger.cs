@@ -1,7 +1,7 @@
 namespace PurpleMonsterSystem {
     class Logger {
-        public void onEvent(object source, EventArgs e) {
-            System.Console.WriteLine(e.ToString());
+        public void onEvent(object source, JsonEvent<TestEventBody> e) {
+            Console.WriteLine(e.Body.ToString());
         }
     }
 }

@@ -6,7 +6,15 @@ namespace PurpleMonsterSystem {
             Logger logger = new();
             testEvent.Tested += logger.onEvent;
 
-            testEvent.Test("Foo");
+            testEvent.Test(@"{
+                ""id"": ""test-id"",  
+                ""timestamp"": ""test-timestamp"",
+                ""sender"": ""test-sender"",
+                ""type"": ""test"",
+                ""body"": {
+                    ""message"": ""Hello World""
+                }
+            }");
         }
     }
 }
