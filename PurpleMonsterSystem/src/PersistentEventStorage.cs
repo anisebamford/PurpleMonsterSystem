@@ -1,4 +1,5 @@
 using System.Text.Json;
+using PurpleMonsterEvents;
 
 namespace PurpleMonsterSystem {
     class PersistentEventStorage {
@@ -9,7 +10,5 @@ namespace PurpleMonsterSystem {
         public string MakeQueryEventsByEntityId(string entityId) {
             return $"EXECUTE getEventsByEntityId({entityId})";
         }
-
-        public Stream
     }
 }

@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using PurpleMonsterEvents;
 namespace PurpleMonsterSystem {
     class Program {
         public static void Main() {
@@ -11,6 +12,7 @@ namespace PurpleMonsterSystem {
                 ""timestamp"": ""test-timestamp"",
                 ""sender"": ""test-sender"",
                 ""type"": ""test"",
+                ""entity"": ""test"",
                 ""body"": {
                     ""message"": ""Hello World""
                 }
