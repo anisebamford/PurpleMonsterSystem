@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  gql:
+
+  eventstore:
+    image: alpine
+
+  eventdb:
+    image: postgres:17
+    volumes:
+      - postgres:/dev/shm
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+volumes:
+  - postgres
+  
