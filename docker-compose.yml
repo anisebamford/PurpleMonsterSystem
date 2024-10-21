@@ -1,10 +1,13 @@
 version: '3.8'
 
 services:
+  reverse-proxy:
+    image: nginx:stable-perl
+    
   gql:
 
   eventstore:
-    image: alpine
+    build: .
 
   eventdb:
     image: postgres:17

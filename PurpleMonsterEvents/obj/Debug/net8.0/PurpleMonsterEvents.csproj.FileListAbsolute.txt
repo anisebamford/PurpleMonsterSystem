@@ -1,0 +1,12 @@
+/home/anise/projects/purplemonster/server/PurpleMonsterEvents/bin/Debug/net8.0/PurpleMonsterEvents.deps.json
+/home/anise/projects/purplemonster/server/PurpleMonsterEvents/bin/Debug/net8.0/PurpleMonsterEvents.dll
+/home/anise/projects/purplemonster/server/PurpleMonsterEvents/bin/Debug/net8.0/PurpleMonsterEvents.pdb
+/home/anise/projects/purplemonster/server/PurpleMonsterEvents/obj/Debug/net8.0/PurpleMonsterEvents.GeneratedMSBuildEditorConfig.editorconfig
+/home/anise/projects/purplemonster/server/PurpleMonsterEvents/obj/Debug/net8.0/PurpleMonsterEvents.AssemblyInfoInputs.cache
+/home/anise/projects/purplemonster/server/PurpleMonsterEvents/obj/Debug/net8.0/PurpleMonsterEvents.AssemblyInfo.cs
+/home/anise/projects/purplemonster/server/PurpleMonsterEvents/obj/Debug/net8.0/PurpleMonsterEvents.csproj.CoreCompileInputs.cache
+/home/anise/projects/purplemonster/server/PurpleMonsterEvents/obj/Debug/net8.0/PurpleMonsterEvents.sourcelink.json
+/home/anise/projects/purplemonster/server/PurpleMonsterEvents/obj/Debug/net8.0/PurpleMonsterEvents.dll
+/home/anise/projects/purplemonster/server/PurpleMonsterEvents/obj/Debug/net8.0/refint/PurpleMonsterEvents.dll
+/home/anise/projects/purplemonster/server/PurpleMonsterEvents/obj/Debug/net8.0/PurpleMonsterEvents.pdb
+/home/anise/projects/purplemonster/server/PurpleMonsterEvents/obj/Debug/net8.0/ref/PurpleMonsterEvents.dll

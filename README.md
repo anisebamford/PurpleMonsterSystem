@@ -15,3 +15,7 @@ Purple monster server is a next generation headless property management system, 
 * Role based chatting! Now you and your staff can send messages to people based on whether their roles! Neat!
 * Other stuff! I have lots of ideas and limited attention.
 * Friendship and Free Stuff: We're MIT Licensed, baybee! If you have built something on or for this project, and it's got a permissive open source licence, we'd love to feature it here!
+
+### Development:
+* Copy the .env.dev file to .env: `cp ./.env.dev ./.env`
+* Start the containers: `docker-compose up -d`
