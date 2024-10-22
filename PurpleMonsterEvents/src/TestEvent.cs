@@ -12,6 +12,8 @@ namespace PurpleMonsterEvents {
     public class TestEventPublisher {
         public delegate void TestEventHandler(object source, JsonEvent<TestEventBody> e);
 
+        public const TYPE="test";
+
         public event TestEventHandler? Tested;
 
         public void Test(string json) {
