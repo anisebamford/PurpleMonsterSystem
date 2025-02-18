@@ -40,34 +40,38 @@ function removeExtension(file: string) {
 }
 
 async function generateEvent(file: string) {
-    const contents = await readFile(file, "utf8")
-    const lines = contents.split("\n");
-    let eventType = "";
-    let eventMessage = "";
+    try {
+        const contents = await readFile(file, "utf8")
+        const lines = contents.split("\n");
+        let eventType = "";
+        let eventMessage = "";
 
-    let pointer = 0;
-    while (pointer < lines.length) {
-        const line = lines[pointer];
-        if (line.includes("@event-type")) {
+        let pointer = 0;
+        while (pointer < lines.length) {
+            const line = lines[pointer];
+            if (line.includes("@event-type")) {
+                pointer++;
+                eventType = parseIdentifier(file, lines[pointer])
+            } else if (line.includes("@event-message")) {
+                pointer++;
+                eventMessage = parseIdentifier(file, lines[pointer])
+            }
             pointer++;
-            eventType = parseIdentifier(file, lines[pointer])
         }
-        else if(line.includes("@event-message")) {
-            pointer++;
-            eventMessage = parseIdentifier(file, lines[pointer])
-        }
-        pointer++;
-    }
 
-    if (!eventType || !eventMessage) {
-        throw new Error(`Incomplete event definition in ${file}`)
+        if (!eventType || !eventMessage) {
+            throw new Error(`Incomplete event definition in ${file}`)
+        }
+        const eventName = extractEventNameFromFilePath(file);
+        const importPath = removeExtension(path.posix.relative(GENERATED_DIRNAME, file))
+        return {
+            import: `import {${eventType}, ${eventMessage}} from "${importPath}"`,
+            definition: `export interface ${eventName} extends PMSEvent<typeof ${eventType}, ${eventMessage}> {}`,
+            eventName
+        }
     }
-    const eventName = extractEventNameFromFilePath(file);
-    const importPath = removeExtension(path.posix.relative(GENERATED_DIRNAME, file))
-    return {
-        import: `import {${eventType}, ${eventMessage}} from "${importPath}"`,
-        definition: `export interface ${eventName} extends PMSEvent<typeof ${eventType}, ${eventMessage}> {}`,
-        eventName
+    catch (e) {
+        throw new Error(`Error in file ${file}: ${e}`);
     }
 }
 

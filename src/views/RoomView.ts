@@ -23,18 +23,7 @@ import {EntityView} from "./EntityView";
 
 export class RoomView extends Featured(Annotated(EntityView<Room>)) {
     constructor (event: CreateRoom) {
-        super({
-            description: "",
-            features: [],
-            isBlocked: false,
-            isClean: true,
-            isOccupied: false,
-            isDeleted: false,
-            name: event.message.name,
-            notes: [],
-            type: event.message.type,
-            id: event.message.id,
-        });
+        super(event.message);
     }
 
     protected blockRoomHandler(evt: BlockRoom) {

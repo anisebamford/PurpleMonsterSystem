@@ -3,6 +3,7 @@ import {Feature} from "./Feature";
 
 export interface Entity {
     id: string;
+    isDeleted: boolean;
 }
 
 export interface AnnotatedEntity extends Entity {
