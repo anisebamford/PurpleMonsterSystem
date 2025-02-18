@@ -6,8 +6,9 @@
   "scripts": {
     "build": "tsc",
     "start": "tsx ./src/index.ts",
+    "generate": "tsx scripts/makeGeneratedDirectory.ts && npm run generate:events",
     "generate:events": "tsx scripts/generateEvents.ts",
-    "postinstall": "npm run generate:events"
+    "postinstall": "npm run generate"
   },
   "dependencies": {
     "tsx": "^4.19.2",
