@@ -9,6 +9,8 @@ import {CLEAN_ROOM} from "../events/Room/CleanRoom";
 import {DELETE_ROOM} from "../events/Room/DeleteRoom";
 import {DESCRIBE_ROOM} from "../events/Room/DescribeRoom";
 import {UPDATE_ROOM_TYPE} from "../events/RoomType/UpdateRoomType";
+import {RoomType} from "../models/RoomType";
+import {CHANGE_TYPE_OF_ROOM} from "../events/Room/ChangeTypeOfRoom";
 
 
 export const exampleRoom: Room = {
@@ -25,7 +27,7 @@ export const exampleRoom: Room = {
         description: "who needs furniture when you can sleep on the FLOOOOOR!",
         features: []
     },
-    id: "00000000-0000-4000-9000-000000000000",
+    id: "foo",
     name: "example room"
 }
 
@@ -174,4 +176,26 @@ it("Will update a room type", () => {
     })
 
     expect(roomView.model.roomType.name).toBe("100% Mattress coverage")
+})
+
+it("will change the type of a room", () =>{
+    const roomType: RoomType = {
+        id: "jelly",
+        description: "it's bouncy",
+        name: "jelly",
+        features: []
+    }
+
+    const roomView = createView()
+
+    roomView.handle({
+        type: CHANGE_TYPE_OF_ROOM,
+        entityId: exampleRoom.id,
+        id: "",
+        message: roomType,
+        timestamp: "",
+        userId: ""
+    })
+
+    expect(roomView.model.roomType.name).toBe("jelly")
 })

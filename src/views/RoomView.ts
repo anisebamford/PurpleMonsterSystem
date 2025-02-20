@@ -8,6 +8,7 @@ import {RELEASE_ROOM} from "../events/Room/ReleaseRoom";
 import {RENAME_ROOM} from "../events/Room/RenameRoom";
 import {
     BlockRoom,
+    ChangeTypeOfRoom,
     CleanRoom,
     CreateRoom,
     DeleteRoom,
@@ -15,12 +16,14 @@ import {
     DirtyRoom,
     Event,
     ReleaseRoom,
-    RenameRoom, UpdateRoomType
+    RenameRoom,
+    UpdateRoomType
 } from "../generated/events";
 import {Annotated} from "./mixins/Annotated";
 import {Featured} from "./mixins/Featured";
 import {EntityView} from "./EntityView";
 import {UPDATE_ROOM_TYPE} from "../events/RoomType/UpdateRoomType";
+import {CHANGE_TYPE_OF_ROOM} from "../events/Room/ChangeTypeOfRoom";
 
 export class RoomView extends Featured(Annotated(EntityView<Room>)) {
     constructor (event: CreateRoom) {
@@ -68,6 +71,10 @@ export class RoomView extends Featured(Annotated(EntityView<Room>)) {
         }
     }
 
+    protected changeTypeOfRoomHandler(event: ChangeTypeOfRoom) {
+        this.innerModel.roomType = event.message;
+    }
+
     handle(event: Event): void {
         if (!this.eventApplies(event)) return;
         switch (event.type) {
@@ -94,6 +101,9 @@ export class RoomView extends Featured(Annotated(EntityView<Room>)) {
                 break;
             case UPDATE_ROOM_TYPE:
                 this.updateRoomTypeHandler(event);
+                break;
+            case CHANGE_TYPE_OF_ROOM:
+                this.changeTypeOfRoomHandler(event);
                 break;
             default:
                 super.handle(event);
