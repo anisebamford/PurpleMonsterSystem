@@ -10,20 +10,20 @@ type Constructor<TEntity extends AnnotatedEntity, T extends View<TEntity> = View
 export function Annotated<T extends Constructor<AnnotatedEntity>>(Base: T) {
     return class extends Base {
         protected handleAddNoteToEntity(event: AddNoteToEntity): void {
-            this.model.notes.push(event.message);
+            this.innerModel.notes.push(event.message);
         }
 
         protected handleDeleteNote(event: DeleteNote): void {
-            const noteIndex = this.model.notes.findIndex((note) => note.id === event.message.id)
+            const noteIndex = this.innerModel.notes.findIndex((note) => note.id === event.message.id)
             if (noteIndex >= 0) {
-                this.model.notes.splice(noteIndex, 1)
+                this.innerModel.notes.splice(noteIndex, 1)
             }
         }
 
         protected handleUpdateNote(event: UpdateNote): void {
-            const noteIndex = this.model.notes.findIndex((note) => note.id === event.message.id)
+            const noteIndex = this.innerModel.notes.findIndex((note) => note.id === event.message.id)
             if (noteIndex >= 0) {
-                this.model.notes[noteIndex] = event.message;
+                this.innerModel.notes[noteIndex] = event.message;
             }
         }
 

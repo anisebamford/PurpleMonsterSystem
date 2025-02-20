@@ -12,17 +12,17 @@ export class GuestView extends Annotated(EntityView<Guest>) {
     }
 
     handleBlacklistGuest(event: BlacklistGuest) {
-        this.model.isBlacklisted = true;
-        this.model.notes.push(event.message);
+        this.innerModel.isBlacklisted = true;
+        this.innerModel.notes.push(event.message);
     }
 
     handleUnbanGuest(event: UnbanGuest) {
-        this.model.isBlacklisted = false;
-        this.model.notes.push(event.message);
+        this.innerModel.isBlacklisted = false;
+        this.innerModel.notes.push(event.message);
     }
 
     handleDeleteGuest(event: DeleteGuest) {
-        this.model.isDeleted = true;
+        this.innerModel.isDeleted = true;
     }
 
     handle(event: Event) {

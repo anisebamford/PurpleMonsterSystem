@@ -28,33 +28,33 @@ export class RoomView extends Featured(Annotated(EntityView<Room>)) {
 
     protected blockRoomHandler(evt: BlockRoom) {
         if (evt.message) {
-            this.model.notes.push(evt.message);
+            this.innerModel.notes.push(evt.message);
         }
-        this.model.isBlocked = true;
+        this.innerModel.isBlocked = true;
     }
 
     protected cleanRoomHandler(evt: CleanRoom) {
-        this.model.isClean = true;
+        this.innerModel.isClean = true;
     }
 
     protected deleteRoomHandler(evt: DeleteRoom) {
-        this.model.isDeleted = true;
+        this.innerModel.isDeleted = true;
     }
 
     protected describeRoomHandler(evt: DescribeRoom) {
-        this.model.description = evt.message.description
+        this.innerModel.description = evt.message.description
     }
 
     protected dirtyRoomHandler(evt: DirtyRoom) {
-        this.model.isClean = false;
+        this.innerModel.isClean = false;
     }
 
     protected releaseRoomHandler(evt: ReleaseRoom) {
-        this.model.isBlocked = false;
+        this.innerModel.isBlocked = false;
     }
 
     protected renameRoomHandler(evt: RenameRoom) {
-        this.model.name = evt.message.name;
+        this.innerModel.name = evt.message.name;
     }
 
     handle(event: Event): void {

@@ -5,17 +5,20 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "tsx ./src/index.ts",
     "generate": "tsx scripts/makeGeneratedDirectory.ts && npm run generate:events",
     "generate:events": "tsx scripts/generateEvents.ts",
-    "postinstall": "npm run generate"
+    "postinstall": "npm run generate",
+    "test": "bun test --coverage --coverage-dir=\"./coverage\" --coverage-reporter=lcov",
+    "test:watch": "bun test --watch --coverage"
   },
   "dependencies": {
     "tsx": "^4.19.2",
     "uuid": "^11.0.5"
   },
   "devDependencies": {
+    "@types/bun": "^1.2.2",
     "@types/node": "^22.13.4",
+    "bun": "^1.2.2",
     "typescript": "^5.5.3"
   },
   "license": "MIT"

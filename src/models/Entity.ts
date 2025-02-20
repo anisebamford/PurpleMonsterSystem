@@ -3,7 +3,7 @@ import {Feature} from "./Feature";
 
 export interface Entity {
     id: string;
-    isDeleted: boolean;
+    isDeleted?: boolean;
 }
 
 export interface AnnotatedEntity extends Entity {
@@ -13,3 +13,4 @@ export interface AnnotatedEntity extends Entity {
 export interface FeaturedEntity extends Entity {
     features: Feature[];
 }
+

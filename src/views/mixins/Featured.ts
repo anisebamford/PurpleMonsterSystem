@@ -11,27 +11,27 @@ type Constructor<TEntity extends FeaturedEntity, T extends EntityView<TEntity> =
 export function Featured<T extends Constructor<FeaturedEntity>>(Base: T) {
     return class extends Base {
         protected handleAddFeatureToEntity(event: AddFeatureToEntity) {
-            this.model.features.push(event.message)
+            this.innerModel.features.push(event.message)
         }
 
         protected handleUpdateFeature(event: UpdateFeature) {
-            const featureIndex = this.model.features.findIndex(feature => feature.id === event.message.id);
+            const featureIndex = this.innerModel.features.findIndex(feature => feature.id === event.message.id);
             if (featureIndex >= 0) {
-                this.model.features[featureIndex] = event.message;
+                this.innerModel.features[featureIndex] = event.message;
             }
         }
 
         protected handleDeleteFeature(event: DeleteFeature) {
-            const featureIndex = this.model.features.findIndex(feature => feature.id === event.entityId);
+            const featureIndex = this.innerModel.features.findIndex(feature => feature.id === event.entityId);
             if (featureIndex >= 0) {
-                this.model.features.splice(featureIndex, 1);
+                this.innerModel.features.splice(featureIndex, 1);
             }
         }
 
         protected handleRemoveFeatureFromEntity(event: RemoveFeatureFromEntity) {
-            const featureIndex = this.model.features.findIndex(feature => feature.id === event.message.id)
+            const featureIndex = this.innerModel.features.findIndex(feature => feature.id === event.message.id)
             if (featureIndex >= 0) {
-                this.model.features.splice(featureIndex, 1);
+                this.innerModel.features.splice(featureIndex, 1);
             }
         }
 

@@ -1,10 +1,14 @@
 import {Entity} from "./Entity";
 
-export type NoteState = "published" | "deleted"
-
 export interface Note extends Entity {
     timestamp: string,
     userId: string,
-    message: string,
-    state: NoteState
+    contents: string,
+}
+
+export const exampleNote: Note = {
+    id: "",
+    timestamp: "",
+    userId: "",
+    contents: "Hello!"
 }
