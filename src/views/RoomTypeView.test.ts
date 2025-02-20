@@ -1,6 +1,7 @@
 import {expect, it} from "bun:test";
 import {RoomTypeView} from "./RoomTypeView";
 import {RoomType} from "../models/RoomType";
+import {UPDATE_ROOM_TYPE} from "../events/RoomType/UpdateRoomType";
 
 function testRoomType(): RoomType {
     return {
@@ -26,3 +27,22 @@ it("Will construct", () => {
     expect(createView()).toBeInstanceOf(RoomTypeView);
 })
 
+it("Will update the room type", () => {
+    const roomType = createView({name: "sand"})
+
+    roomType.handle({
+        type: UPDATE_ROOM_TYPE,
+        entityId: "sand",
+        id: "",
+        message: {
+            id: "sand",
+            name: "No more sand",
+            description: "We took out the sand because you all never believed in our vision.",
+            features: [],
+        },
+        timestamp: "",
+        userId: ""
+    })
+
+    expect(roomType.model.name).toBe("No more sand")
+})

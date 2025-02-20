@@ -15,46 +15,57 @@ import {
     DirtyRoom,
     Event,
     ReleaseRoom,
-    RenameRoom
+    RenameRoom, UpdateRoomType
 } from "../generated/events";
 import {Annotated} from "./mixins/Annotated";
 import {Featured} from "./mixins/Featured";
 import {EntityView} from "./EntityView";
+import {UPDATE_ROOM_TYPE} from "../events/RoomType/UpdateRoomType";
 
 export class RoomView extends Featured(Annotated(EntityView<Room>)) {
     constructor (event: CreateRoom) {
         super(event.message);
     }
 
-    protected blockRoomHandler(evt: BlockRoom) {
-        if (evt.message) {
-            this.innerModel.notes.push(evt.message);
+    protected eventApplies<T extends Event>(event: T): boolean {
+        return [UPDATE_ROOM_TYPE].includes(event.type) || super.eventApplies(event);
+    }
+
+    protected blockRoomHandler(event: BlockRoom) {
+        if (event.message) {
+            this.innerModel.notes.push(event.message);
         }
         this.innerModel.isBlocked = true;
     }
 
-    protected cleanRoomHandler(evt: CleanRoom) {
+    protected cleanRoomHandler(event: CleanRoom) {
         this.innerModel.isClean = true;
     }
 
-    protected deleteRoomHandler(evt: DeleteRoom) {
+    protected deleteRoomHandler(event: DeleteRoom) {
         this.innerModel.isDeleted = true;
     }
 
-    protected describeRoomHandler(evt: DescribeRoom) {
-        this.innerModel.description = evt.message.description
+    protected describeRoomHandler(event: DescribeRoom) {
+        this.innerModel.description = event.message.description
     }
 
-    protected dirtyRoomHandler(evt: DirtyRoom) {
+    protected dirtyRoomHandler(event: DirtyRoom) {
         this.innerModel.isClean = false;
     }
 
-    protected releaseRoomHandler(evt: ReleaseRoom) {
+    protected releaseRoomHandler(event: ReleaseRoom) {
         this.innerModel.isBlocked = false;
     }
 
-    protected renameRoomHandler(evt: RenameRoom) {
-        this.innerModel.name = evt.message.name;
+    protected renameRoomHandler(event: RenameRoom) {
+        this.innerModel.name = event.message.name;
+    }
+
+    protected updateRoomTypeHandler(event: UpdateRoomType) {
+        if (this.innerModel.roomType.id === event.entityId) {
+            this.innerModel.roomType = event.message
+        }
     }
 
     handle(event: Event): void {
@@ -80,6 +91,9 @@ export class RoomView extends Featured(Annotated(EntityView<Room>)) {
                 break;
             case RENAME_ROOM:
                 this.renameRoomHandler(event);
+                break;
+            case UPDATE_ROOM_TYPE:
+                this.updateRoomTypeHandler(event);
                 break;
             default:
                 super.handle(event);

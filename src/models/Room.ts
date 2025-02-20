@@ -1,4 +1,4 @@
-import {ROOM_TYPE, RoomTypeRef} from "./RoomType";
+import {RoomType} from "./RoomType";
 import {Feature} from "./Feature";
 import {AnnotatedEntity} from "./Entity";
 
@@ -9,7 +9,7 @@ export interface Room extends AnnotatedEntity {
     isOccupied: boolean,
     isBlocked: boolean,
     isDeleted: boolean,
-    type: RoomTypeRef,
+    roomType: RoomType,
     description: string,
     features: Feature[],
 }
