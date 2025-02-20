@@ -3,6 +3,7 @@ import {FeatureView} from "./FeatureView";
 import { Feature } from "../models/Feature";
 import {CREATE_FEATURE} from "../events/Feature/CreateFeature";
 import {DELETE_FEATURE} from "../events/Feature/DeleteFeature";
+import {UPDATE_FEATURE} from "../events/Feature/UpdateFeature";
 
 function testFeature(): Feature {
     return {
@@ -40,4 +41,23 @@ it("Will handle DELETE_FEATURE", async () => {
     })
 
     expect(view.model.isDeleted).toBeTruthy()
+})
+
+it("Will handle UPDATE_FEATURE", async () => {
+    const view = createView({name: "Indoor Sandbox"})
+
+    view.handle({
+        type: UPDATE_FEATURE,
+        entityId: "foo",
+        id: "",
+        message: {
+            name: "The whole floor is sand!",
+            description: "",
+            id: "foo",
+        },
+        timestamp: "",
+        userId: ""
+    })
+
+    expect(view.model.name).toBe("The whole floor is sand!");
 })
