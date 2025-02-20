@@ -2,6 +2,7 @@ import {expect, it} from "bun:test";
 import {RoomTypeView} from "./RoomTypeView";
 import {RoomType} from "../models/RoomType";
 import {UPDATE_ROOM_TYPE} from "../events/RoomType/UpdateRoomType";
+import {DELETE_ROOM_TYPE} from "../events/RoomType/DeleteRoomType";
 
 function testRoomType(): RoomType {
     return {
@@ -45,4 +46,19 @@ it("Will update the room type", () => {
     })
 
     expect(roomType.model.name).toBe("No more sand")
+})
+
+it("Will delete a room type", () => {
+    const roomType = createView()
+
+    roomType.handle({
+        type: DELETE_ROOM_TYPE,
+        entityId: "sand",
+        id: "",
+        message: null,
+        timestamp: "",
+        userId: ""
+    })
+
+    expect(roomType.model.isDeleted).toBeTrue();
 })

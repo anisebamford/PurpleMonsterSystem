@@ -1,8 +1,9 @@
 import {Featured} from "./mixins/Featured";
 import {EntityView} from "./EntityView";
 import {RoomType} from "../models/RoomType";
-import {Event, CreateRoomType, UpdateRoomType} from "../generated/events";
+import {Event, CreateRoomType, UpdateRoomType, DeleteRoomType} from "../generated/events";
 import {UPDATE_ROOM_TYPE} from "../events/RoomType/UpdateRoomType";
+import {DELETE_ROOM_TYPE} from "../events/RoomType/DeleteRoomType";
 
 export class RoomTypeView extends Featured(EntityView<RoomType>){
     constructor(event: CreateRoomType) {
@@ -13,11 +14,18 @@ export class RoomTypeView extends Featured(EntityView<RoomType>){
         this.innerModel = event.message;
     }
 
+    handleDeleteRoomType(event: DeleteRoomType) {
+        this.innerModel.isDeleted = true;
+    }
+
     handle(event: Event) {
         if (!this.eventApplies(event)) return;
         switch (event.type) {
             case UPDATE_ROOM_TYPE:
                 this.handleUpdateRoomType(event);
+                break;
+            case DELETE_ROOM_TYPE:
+                this.handleDeleteRoomType(event);
                 break;
             default:
                 super.handle(event);
