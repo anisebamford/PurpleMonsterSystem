@@ -16,8 +16,6 @@ stay (annotated)
 * cancel
 
 transaction (annotated)
-* change amount (disabled when processed)
-* void (disabled when not processed)
 * set payment info (disabled when processed)
 * change payment info (disabled when processed)
 

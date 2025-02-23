@@ -7,6 +7,7 @@ import {PROCESS_TRANSACTION} from "../events/Transaction/ProcessTransaction";
 import {REFUND_TRANSACTION} from "../events/Transaction/RefundTransaction";
 import {SET_TRANSACTION_AMOUNT} from "../events/Transaction/SetTransactionAmount";
 import {CHANGE_TRANSACTION_AMOUNT} from "../events/Transaction/ChangeTransactionAmount";
+import {VOID_TRANSACTION} from "../events/Transaction/VoidTransaction";
 
 function testTransaction(transaction?: Partial<Transaction>) {
     return Object.assign({
@@ -188,4 +189,33 @@ it("will not change a transaction amount if the transaction has been processed",
     })
 
     expect(view.model.amount).toEqual(0);
+})
+
+it("Will void a transaction if it has been processed", () => {
+    const view = createView({isProcessed: true});
+
+    view.handle({
+        entityId: "foo",
+        id: "",
+        message: null,
+        timestamp: "",
+        type: VOID_TRANSACTION,
+        userId: ""
+    })
+
+    expect(view.model.isVoid).toEqual(true);
+})
+
+it("Will not void a transaction if it has not been processed", () => {
+    const view = createView({isProcessed: false});
+    view.handle({
+        entityId: "foo",
+        id: "",
+        message: null,
+        timestamp: "",
+        type: VOID_TRANSACTION,
+        userId: ""
+    })
+
+    expect(view.model.isVoid).toEqual(false);
 })

@@ -9,13 +9,14 @@ import {
     ProcessTransaction,
     RefundTransaction,
     SetTransactionAmount,
-    SetTransactionCode
+    SetTransactionCode, VoidTransaction
 } from "../generated/events";
 import {SET_TRANSACTION_CODE} from "../events/Transaction/SetTransactionCode";
 import {CHANGE_TRANSACTION_CODE} from "../events/Transaction/ChangeTransactionCode";
 import {PROCESS_TRANSACTION} from "../events/Transaction/ProcessTransaction";
 import {SET_TRANSACTION_AMOUNT} from "../events/Transaction/SetTransactionAmount";
 import {CHANGE_TRANSACTION_AMOUNT} from "../events/Transaction/ChangeTransactionAmount";
+import {VOID_TRANSACTION} from "../events/Transaction/VoidTransaction";
 
 export class TransactionView extends Annotated(EntityView<Transaction>) {
     constructor(event: CreateTransaction | RefundTransaction) {
@@ -46,6 +47,11 @@ export class TransactionView extends Annotated(EntityView<Transaction>) {
         this.model.amount = event.message.amount;
     }
 
+    handleVoidTransaction(event: VoidTransaction) {
+        if(!this.model.isProcessed) return;
+        this.model.isVoid = true;
+    }
+
     handle(event: Event) {
         if (!this.eventApplies(event)) return;
         switch (event.type) {
@@ -64,9 +70,11 @@ export class TransactionView extends Annotated(EntityView<Transaction>) {
             case CHANGE_TRANSACTION_AMOUNT:
                 this.handleChangeTransactionAmount(event)
                 break;
+            case VOID_TRANSACTION:
+                this.handleVoidTransaction(event);
+                break;
             default:
                 super.handle(event);
         }
     }
-
 }
