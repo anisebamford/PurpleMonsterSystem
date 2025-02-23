@@ -2,16 +2,20 @@ import {Annotated} from "./mixins/Annotated";
 import {EntityView} from "./EntityView";
 import {Transaction} from "../models/Transaction";
 import {
+    ChangeTransactionAmount,
     ChangeTransactionCode,
     CreateTransaction,
     Event,
-    ProcessTransaction, RefundTransaction, SetTransactionAmount,
+    ProcessTransaction,
+    RefundTransaction,
+    SetTransactionAmount,
     SetTransactionCode
 } from "../generated/events";
 import {SET_TRANSACTION_CODE} from "../events/Transaction/SetTransactionCode";
 import {CHANGE_TRANSACTION_CODE} from "../events/Transaction/ChangeTransactionCode";
 import {PROCESS_TRANSACTION} from "../events/Transaction/ProcessTransaction";
 import {SET_TRANSACTION_AMOUNT} from "../events/Transaction/SetTransactionAmount";
+import {CHANGE_TRANSACTION_AMOUNT} from "../events/Transaction/ChangeTransactionAmount";
 
 export class TransactionView extends Annotated(EntityView<Transaction>) {
     constructor(event: CreateTransaction | RefundTransaction) {
@@ -37,6 +41,11 @@ export class TransactionView extends Annotated(EntityView<Transaction>) {
         this.model.amount = event.message.amount;
     }
 
+    handleChangeTransactionAmount(event: ChangeTransactionAmount) {
+        if(this.model.isProcessed) return;
+        this.model.amount = event.message.amount;
+    }
+
     handle(event: Event) {
         if (!this.eventApplies(event)) return;
         switch (event.type) {
@@ -51,6 +60,9 @@ export class TransactionView extends Annotated(EntityView<Transaction>) {
                 break;
             case SET_TRANSACTION_AMOUNT:
                 this.handleSetTransactionAmount(event)
+                break;
+            case CHANGE_TRANSACTION_AMOUNT:
+                this.handleChangeTransactionAmount(event)
                 break;
             default:
                 super.handle(event);

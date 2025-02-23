@@ -6,6 +6,7 @@ import {CHANGE_TRANSACTION_CODE} from "../events/Transaction/ChangeTransactionCo
 import {PROCESS_TRANSACTION} from "../events/Transaction/ProcessTransaction";
 import {REFUND_TRANSACTION} from "../events/Transaction/RefundTransaction";
 import {SET_TRANSACTION_AMOUNT} from "../events/Transaction/SetTransactionAmount";
+import {CHANGE_TRANSACTION_AMOUNT} from "../events/Transaction/ChangeTransactionAmount";
 
 function testTransaction(transaction?: Partial<Transaction>) {
     return Object.assign({
@@ -153,6 +154,36 @@ it("won't change a transaction amount if the transaction has been processed", ()
             amount: 99.99
         },
         timestamp: "",
+        userId: ""
+    })
+
+    expect(view.model.amount).toEqual(0);
+})
+
+it("will change a transaction amount", () => {
+    const view = createView({amount: 0});
+
+    view.handle({
+        entityId: "foo",
+        id: "",
+        message: {amount: 99.99},
+        timestamp: "",
+        type: CHANGE_TRANSACTION_AMOUNT,
+        userId: ""
+    })
+
+    expect(view.model.amount).toEqual(99.99);
+})
+
+it("will not change a transaction amount if the transaction has been processed", () => {
+    const view = createView({amount: 0, isProcessed: true});
+
+    view.handle({
+        entityId: "foo",
+        id: "",
+        message: {amount: 99.99},
+        timestamp: "",
+        type: CHANGE_TRANSACTION_AMOUNT,
         userId: ""
     })
 
