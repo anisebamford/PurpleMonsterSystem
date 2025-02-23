@@ -4,6 +4,7 @@ import {TransactionView} from "./TransactionView";
 import {SET_TRANSACTION_CODE} from "../events/Transaction/SetTransactionCode";
 import {CHANGE_TRANSACTION_CODE} from "../events/Transaction/ChangeTransactionCode";
 import {PROCESS_TRANSACTION} from "../events/Transaction/ProcessTransaction";
+import {REFUND_TRANSACTION} from "../events/Transaction/RefundTransaction";
 
 function testTransaction(transaction?: Partial<Transaction>) {
     return Object.assign({
@@ -111,3 +112,14 @@ it("won't change codes on processed transactions", async () => {
 
     expect(view.model.code).toEqual("this code");
 });
+
+it("will create a view from a refund transaction message", () => {
+    expect(new TransactionView({
+        entityId: "",
+        id: "",
+        message: testTransaction(),
+        timestamp: "",
+        type: REFUND_TRANSACTION,
+        userId: ""
+    })).toBeInstanceOf(TransactionView);
+})

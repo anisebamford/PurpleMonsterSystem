@@ -5,7 +5,7 @@ import {
     ChangeTransactionCode,
     CreateTransaction,
     Event,
-    ProcessTransaction,
+    ProcessTransaction, RefundTransaction,
     SetTransactionCode
 } from "../generated/events";
 import {SET_TRANSACTION_CODE} from "../events/Transaction/SetTransactionCode";
@@ -13,7 +13,7 @@ import {CHANGE_TRANSACTION_CODE} from "../events/Transaction/ChangeTransactionCo
 import {PROCESS_TRANSACTION} from "../events/Transaction/ProcessTransaction";
 
 export class TransactionView extends Annotated(EntityView<Transaction>) {
-    constructor(event: CreateTransaction) {
+    constructor(event: CreateTransaction | RefundTransaction) {
         super(event.message);
     }
 
