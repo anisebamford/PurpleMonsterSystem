@@ -2,6 +2,7 @@ import {expect, it} from "bun:test"
 import {Transaction} from "../models/Transaction";
 import {TransactionView} from "./TransactionView";
 import {SET_TRANSACTION_CODE} from "../events/Transaction/SetTransactionCode";
+import {CHANGE_TRANSACTION_CODE} from "../events/Transaction/ChangeTransactionCode";
 
 function testTransaction(transaction?: Partial<Transaction>) {
     return Object.assign({
@@ -46,3 +47,17 @@ it("Will set a transaction code", async () => {
     expect(view.model.code).toEqual("this code");
 })
 
+it("Will change a transaction code", async () => {
+    const view = await createView();
+
+    view.handle({
+        type: CHANGE_TRANSACTION_CODE,
+        entityId: "foo",
+        id: "",
+        message: {
+            code: "this code"
+        },
+        timestamp: "",
+        userId: ""
+    })
+})
