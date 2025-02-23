@@ -3,6 +3,7 @@ import {Transaction} from "../models/Transaction";
 import {TransactionView} from "./TransactionView";
 import {SET_TRANSACTION_CODE} from "../events/Transaction/SetTransactionCode";
 import {CHANGE_TRANSACTION_CODE} from "../events/Transaction/ChangeTransactionCode";
+import {PROCESS_TRANSACTION} from "../events/Transaction/ProcessTransaction";
 
 function testTransaction(transaction?: Partial<Transaction>) {
     return Object.assign({
@@ -11,7 +12,8 @@ function testTransaction(transaction?: Partial<Transaction>) {
         amount: 0,
         isVoid: false,
         paymentInfo: "CASH",
-        notes: []
+        notes: [],
+        isProcessed: false,
     }, transaction);
 }
 
@@ -19,7 +21,7 @@ function createView(transaction?: Partial<Transaction>) {
     return new TransactionView({
         id: "",
         entityId: "foo",
-        message: testTransaction(),
+        message: testTransaction(transaction),
         timestamp: "",
         type: "CREATE_TRANSACTION",
         userId: ""
@@ -61,3 +63,51 @@ it("Will change a transaction code", async () => {
         userId: ""
     })
 })
+
+it("Will process a transaction", async () => {
+    const view = await createView();
+
+    view.handle({
+        type: PROCESS_TRANSACTION,
+        entityId: "foo",
+        id: "",
+        message: null,
+        timestamp: "",
+        userId: ""
+    })
+
+    expect(view.model.isProcessed).toEqual(true);
+})
+
+it("won't change codes on processed transactions", async () => {
+    const view = await createView({
+        isProcessed: true,
+        code: "this code",
+    });
+
+    console.log(view.model)
+
+    view.handle({
+        type: SET_TRANSACTION_CODE,
+        entityId: "foo",
+        id: "",
+        message: {
+            code: "not this code"
+        },
+        timestamp: "",
+        userId: ""
+    })
+
+    view.handle({
+        type: CHANGE_TRANSACTION_CODE,
+        entityId: "foo",
+        id: "",
+        message: {
+            code: "not this code"
+        },
+        timestamp: "",
+        userId: ""
+    })
+
+    expect(view.model.code).toEqual("this code");
+});

@@ -6,5 +6,6 @@ export interface Transaction extends AnnotatedEntity {
     code: string,
     amount: number,
     isVoid: boolean,
-    paymentInfo: PaymentInfo
+    paymentInfo: PaymentInfo,
+    isProcessed: boolean,
 }
