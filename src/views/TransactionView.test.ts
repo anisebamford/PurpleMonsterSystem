@@ -2,13 +2,12 @@ import {expect, it} from "bun:test"
 import {Transaction} from "../models/Transaction";
 import {TransactionView} from "./TransactionView";
 import {SET_TRANSACTION_CODE} from "../events/Transaction/SetTransactionCode";
-import {CHANGE_TRANSACTION_CODE} from "../events/Transaction/ChangeTransactionCode";
 import {PROCESS_TRANSACTION} from "../events/Transaction/ProcessTransaction";
 import {REFUND_TRANSACTION} from "../events/Transaction/RefundTransaction";
 import {SET_TRANSACTION_AMOUNT} from "../events/Transaction/SetTransactionAmount";
-import {CHANGE_TRANSACTION_AMOUNT} from "../events/Transaction/ChangeTransactionAmount";
 import {VOID_TRANSACTION} from "../events/Transaction/VoidTransaction";
 import {SET_TRANSACTION_PAYMENT_INFO} from "../events/Transaction/SetTransactionPaymentInfo";
+import {DELETE_TRANSACTION} from "../events/Transaction/DeleteTransaction";
 
 function testTransaction(transaction?: Partial<Transaction>) {
     return Object.assign({
@@ -54,21 +53,6 @@ it("Will set a transaction code", async () => {
     expect(view.model.code).toEqual("this code");
 })
 
-it("Will change a transaction code", async () => {
-    const view = await createView();
-
-    view.handle({
-        type: CHANGE_TRANSACTION_CODE,
-        entityId: "foo",
-        id: "",
-        message: {
-            code: "this code"
-        },
-        timestamp: "",
-        userId: ""
-    })
-})
-
 it("Will process a transaction", async () => {
     const view = await createView();
 
@@ -84,7 +68,7 @@ it("Will process a transaction", async () => {
     expect(view.model.isProcessed).toEqual(true);
 })
 
-it("won't change codes on processed transactions", async () => {
+it("won't set codes on processed transactions", async () => {
     const view = await createView({
         isProcessed: true,
         code: "this code",
@@ -92,17 +76,6 @@ it("won't change codes on processed transactions", async () => {
 
     view.handle({
         type: SET_TRANSACTION_CODE,
-        entityId: "foo",
-        id: "",
-        message: {
-            code: "not this code"
-        },
-        timestamp: "",
-        userId: ""
-    })
-
-    view.handle({
-        type: CHANGE_TRANSACTION_CODE,
         entityId: "foo",
         id: "",
         message: {
@@ -141,53 +114,6 @@ it("will set a transaction amount", () => {
     })
 
     expect(view.model.amount).toEqual(99.99);
-})
-
-it("won't change a transaction amount if the transaction has been processed", () => {
-    const view = createView({isProcessed: true});
-
-    view.handle({
-        type: SET_TRANSACTION_AMOUNT,
-        id: "",
-        entityId: "foo",
-        message: {
-            amount: 99.99
-        },
-        timestamp: "",
-        userId: ""
-    })
-
-    expect(view.model.amount).toEqual(0);
-})
-
-it("will change a transaction amount", () => {
-    const view = createView({amount: 0});
-
-    view.handle({
-        entityId: "foo",
-        id: "",
-        message: {amount: 99.99},
-        timestamp: "",
-        type: CHANGE_TRANSACTION_AMOUNT,
-        userId: ""
-    })
-
-    expect(view.model.amount).toEqual(99.99);
-})
-
-it("will not change a transaction amount if the transaction has been processed", () => {
-    const view = createView({amount: 0, isProcessed: true});
-
-    view.handle({
-        entityId: "foo",
-        id: "",
-        message: {amount: 99.99},
-        timestamp: "",
-        type: CHANGE_TRANSACTION_AMOUNT,
-        userId: ""
-    })
-
-    expect(view.model.amount).toEqual(0);
 })
 
 it("Will void a transaction if it has been processed", () => {
@@ -257,4 +183,32 @@ it("Will not set payment info if transaction is processed", () => {
     })
 
     expect(view.model.paymentInfo.type).toEqual("CASH");
+})
+
+it("Will delete a transaction", () => {
+    const view = createView();
+    view.handle({
+        type: DELETE_TRANSACTION,
+        entityId: "foo",
+        id: "",
+        message: null,
+        timestamp: "",
+        userId: ""
+    })
+
+    expect(view.model.isDeleted).toEqual(true);
+})
+
+it("Will not delete a processed transaction", () => {
+    const view = createView({isProcessed: true});
+    view.handle({
+        type: DELETE_TRANSACTION,
+        entityId: "foo",
+        id: "",
+        message: null,
+        timestamp: "",
+        userId: ""
+    })
+
+    expect(view.model.isDeleted).toBeFalsy()
 })

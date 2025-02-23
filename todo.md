@@ -15,10 +15,6 @@ stay (annotated)
 * move room
 * cancel
 
-transaction (annotated)
-* set payment info (disabled when processed)
-* change payment info (disabled when processed)
-
 ledger
 * create
 * add transaction
