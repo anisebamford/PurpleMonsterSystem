@@ -5,6 +5,7 @@ import {SET_TRANSACTION_CODE} from "../events/Transaction/SetTransactionCode";
 import {CHANGE_TRANSACTION_CODE} from "../events/Transaction/ChangeTransactionCode";
 import {PROCESS_TRANSACTION} from "../events/Transaction/ProcessTransaction";
 import {REFUND_TRANSACTION} from "../events/Transaction/RefundTransaction";
+import {SET_TRANSACTION_AMOUNT} from "../events/Transaction/SetTransactionAmount";
 
 function testTransaction(transaction?: Partial<Transaction>) {
     return Object.assign({
@@ -122,4 +123,38 @@ it("will create a view from a refund transaction message", () => {
         type: REFUND_TRANSACTION,
         userId: ""
     })).toBeInstanceOf(TransactionView);
+})
+
+it("will set a transaction amount", () => {
+    const view = createView()
+
+    view.handle({
+        type: SET_TRANSACTION_AMOUNT,
+        id: "",
+        entityId: "foo",
+        message: {
+            amount: 99.99
+        },
+        timestamp: "",
+        userId: ""
+    })
+
+    expect(view.model.amount).toEqual(99.99);
+})
+
+it("won't change a transaction amount if the transaction has been processed", () => {
+    const view = createView({isProcessed: true});
+
+    view.handle({
+        type: SET_TRANSACTION_AMOUNT,
+        id: "",
+        entityId: "foo",
+        message: {
+            amount: 99.99
+        },
+        timestamp: "",
+        userId: ""
+    })
+
+    expect(view.model.amount).toEqual(0);
 })

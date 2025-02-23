@@ -16,12 +16,10 @@ stay (annotated)
 * cancel
 
 transaction (annotated)
-* set amount (disabled when processed)
 * change amount (disabled when processed)
-* void
-* refund (creates new txn)
+* void (disabled when not processed)
 * set payment info (disabled when processed)
-* change payment info
+* change payment info (disabled when processed)
 
 ledger
 * create
