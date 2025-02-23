@@ -16,7 +16,6 @@ stay (annotated)
 * cancel
 
 transaction (annotated)
-* create
 * set code
 * change code
 * set amount
