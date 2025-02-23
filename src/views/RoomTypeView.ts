@@ -11,11 +11,11 @@ export class RoomTypeView extends Featured(EntityView<RoomType>){
     }
 
     handleUpdateRoomType(event: UpdateRoomType) {
-        this.innerModel = event.message;
+        this.model = event.message;
     }
 
     handleDeleteRoomType(event: DeleteRoomType) {
-        this.innerModel.isDeleted = true;
+        this.model.isDeleted = true;
     }
 
     handle(event: Event) {

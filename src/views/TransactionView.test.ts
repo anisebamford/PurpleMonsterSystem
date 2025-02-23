@@ -8,6 +8,7 @@ import {REFUND_TRANSACTION} from "../events/Transaction/RefundTransaction";
 import {SET_TRANSACTION_AMOUNT} from "../events/Transaction/SetTransactionAmount";
 import {CHANGE_TRANSACTION_AMOUNT} from "../events/Transaction/ChangeTransactionAmount";
 import {VOID_TRANSACTION} from "../events/Transaction/VoidTransaction";
+import {SET_TRANSACTION_PAYMENT_INFO} from "../events/Transaction/SetTransactionPaymentInfo";
 
 function testTransaction(transaction?: Partial<Transaction>) {
     return Object.assign({
@@ -15,7 +16,7 @@ function testTransaction(transaction?: Partial<Transaction>) {
         code: "bar",
         amount: 0,
         isVoid: false,
-        paymentInfo: "CASH",
+        paymentInfo: {type: "CASH"},
         notes: [],
         isProcessed: false,
     }, transaction);
@@ -88,8 +89,6 @@ it("won't change codes on processed transactions", async () => {
         isProcessed: true,
         code: "this code",
     });
-
-    console.log(view.model)
 
     view.handle({
         type: SET_TRANSACTION_CODE,
@@ -218,4 +217,44 @@ it("Will not void a transaction if it has not been processed", () => {
     })
 
     expect(view.model.isVoid).toEqual(false);
+})
+
+it("Will set payment info", () => {
+    const view = createView();
+
+    view.handle({
+        entityId: "foo",
+        id: "",
+        message: {
+            paymentInfo: {
+                type: "CHECK",
+                checkId: ""
+            }
+        },
+        timestamp: "",
+        type: SET_TRANSACTION_PAYMENT_INFO,
+        userId: ""
+    })
+
+    expect(view.model.paymentInfo.type).toEqual("CHECK");
+})
+
+it("Will not set payment info if transaction is processed", () => {
+    const view = createView({isProcessed: true});
+
+    view.handle({
+        entityId: "foo",
+        id: "",
+        message: {
+            paymentInfo: {
+                type: "CHECK",
+                checkId: ""
+            }
+        },
+        timestamp: "",
+        type: SET_TRANSACTION_PAYMENT_INFO,
+        userId: ""
+    })
+
+    expect(view.model.paymentInfo.type).toEqual("CASH");
 })

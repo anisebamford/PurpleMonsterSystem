@@ -11,11 +11,11 @@ export class FeatureView extends EntityView<Feature> {
     }
 
     protected handleDeleteFeature(event: DeleteFeature) {
-        this.innerModel.isDeleted = true;
+        this.model.isDeleted = true;
     }
 
     protected handleUpdateFeature(event: UpdateFeature) {
-        this.innerModel = event.message;
+        this.model = event.message;
     }
 
     handle(event: Event) {

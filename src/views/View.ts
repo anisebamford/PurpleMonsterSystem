@@ -1,7 +1,7 @@
 import {Event} from "../generated/events"
 
 export class View<T> {
-    constructor(protected innerModel: T) {}
+    constructor(public model: T) {}
 
     public handle(event: Event): void {
     }
@@ -10,7 +10,8 @@ export class View<T> {
         return false;
     }
 
-    public get model() {
-        return this.innerModel;
+    // @deprecated
+    public get innerModel() {
+        return this.model;
     }
 }
