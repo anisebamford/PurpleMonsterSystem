@@ -1,0 +1,5 @@
+type Ledger {
+    id: String!,
+    transactions: [Transaction]!
+    balance: Int
+}

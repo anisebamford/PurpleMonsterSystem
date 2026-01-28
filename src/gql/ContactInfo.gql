@@ -1,0 +1,23 @@
+enum PhoneType {
+    HOME
+    CELL
+    FAX
+}
+
+type Phone {
+    type: PhoneType!
+    label: String
+    number: String!
+    preferred: Boolean
+}
+
+type Email {
+    address: String!
+    label: String
+    preferred: Boolean
+}
+
+type ContactInfo {
+    email: [Email]
+    phone: [Phone]
+}

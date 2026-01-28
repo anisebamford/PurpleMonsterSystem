@@ -1,0 +1,11 @@
+type Room {
+    id: String!
+    notes: [Note]!
+    name: String!
+    isClean: Boolean!
+    isOccupied: Boolean!
+    isBlocked: Boolean!
+    roomType: RoomType!
+    description: String
+    features: [Feature]
+}

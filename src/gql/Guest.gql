@@ -1,0 +1,10 @@
+type Guest {
+    id: String!
+    firstName: String!
+    lastName: String!
+    birthday: String
+    contactInfo: ContactInfo
+    address: Address
+    isBlackListed: Boolean!
+    notes: [Note]!
+}

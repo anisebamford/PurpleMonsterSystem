@@ -24,3 +24,7 @@ function createView(ledger?: Partial<Ledger>) {
 it("will construct", () => {
     expect(createView()).toBeInstanceOf(LedgerView);
 })
+
+it("Will update its balance on PROCESS_TRANSACTION", () => {
+    
+})

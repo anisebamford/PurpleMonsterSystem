@@ -4,7 +4,6 @@ import {Room} from "../models/Room";
 import {CREATE_ROOM} from "../events/Room/CreateRoom";
 import {RELEASE_ROOM} from "../events/Room/ReleaseRoom";
 import {DIRTY_ROOM} from "../events/Room/DirtyRoom";
-import {exampleNote} from "../models/Note";
 import {CLEAN_ROOM} from "../events/Room/CleanRoom";
 import {DELETE_ROOM} from "../events/Room/DeleteRoom";
 import {DESCRIBE_ROOM} from "../events/Room/DescribeRoom";
@@ -54,13 +53,18 @@ it("will block a room", async () => {
         type: "BLOCK_ROOM",
         entityId: exampleRoom.id,
         id: "",
-        message: exampleNote,
+        message: {
+            id: "note-id",
+            timestamp: "",
+            userId: "",
+            contents: "",
+        },
         timestamp: "",
         userId: ""
     })
 
     expect(roomView.model.isBlocked).toBeTruthy()
-    expect(roomView.model.notes[0].id).toBe(exampleNote.id)
+    expect(roomView.model.notes[0].id).toBe("note-id")
 })
 
 it("will release a room", async () => {
@@ -70,13 +74,17 @@ it("will release a room", async () => {
         type: RELEASE_ROOM,
         entityId: exampleRoom.id,
         id: "",
-        message: exampleNote,
-        timestamp: "",
+        message: {
+            id: "note-id",
+            timestamp: "",
+            userId: "",
+            contents: "",
+        },        timestamp: "",
         userId: ""
     })
 
     expect(roomView.model.isBlocked).toBeFalsy()
-    expect(roomView.model.notes[0].id).toBe(exampleNote.id)
+    expect(roomView.model.notes[0].id).toBe("note-id")
 })
 
 it("will dirty a room", async () => {
@@ -85,7 +93,12 @@ it("will dirty a room", async () => {
     roomView.handle({
         entityId: exampleRoom.id,
         id: "",
-        message: exampleNote,
+        message: {
+            id: "note-id",
+            timestamp: "",
+            userId: "",
+            contents: "",
+        },
         timestamp: "",
         userId: "",
         type: DIRTY_ROOM

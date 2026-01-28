@@ -1,0 +1,6 @@
+type Note {
+    id: String!
+    timestamp: String!
+    user: User!
+    contents: String!
+}

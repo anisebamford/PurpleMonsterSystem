@@ -15,7 +15,7 @@ export class FeatureView extends EntityView<Feature> {
     }
 
     protected handleUpdateFeature(event: UpdateFeature) {
-        this.model = event.message;
+        this.model = Object.assign(this.model, event.message);
     }
 
     handle(event: Event) {

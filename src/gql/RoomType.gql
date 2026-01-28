@@ -1,0 +1,6 @@
+type RoomType {
+    id: String!
+    name: String!
+    description: String!
+    features: [Feature]!
+}

@@ -1,0 +1,6 @@
+type User {
+    isActive: Boolean!
+    username: String!
+    contactInfo: ContactInfo
+    address: Address
+}

@@ -1,14 +1,8 @@
-import {Entity} from "./Entity";
 
-export interface Note extends Entity {
+export interface Note {
+    id: string,
+    isDeleted?: boolean,
     timestamp: string,
     userId: string,
     contents: string,
-}
-
-export const exampleNote: Note = {
-    id: "",
-    timestamp: "",
-    userId: "",
-    contents: "Hello!"
 }

@@ -1,0 +1,19 @@
+type CashPaymentInfo {
+    type: String!
+}
+
+type CheckPaymentInfo {
+    type: String!
+    checkId: String!
+}
+
+union PaymentInfo = CashPaymentInfo | CheckPaymentInfo
+
+type Transaction {
+    id: String!
+    code: String!
+    notes: [Note]
+    isVoid: Boolean!
+    paymentInfo: PaymentInfo
+    isProcessed: Boolean!
+}

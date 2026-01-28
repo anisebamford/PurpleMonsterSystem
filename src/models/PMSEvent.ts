@@ -9,4 +9,3 @@ export interface PMSEvent<T extends string, TMessage> {
     userId: string;
     source?: string;
 }
-
